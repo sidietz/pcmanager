@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head(title='PCs - PC Manager')}"></head>
+
+<body class="bg-light">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>PCs</h2>
+            <a th:href="@{/pcs/add}" class="btn btn-primary">Add New PC</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>MAC Address</th>
+                        <th>Base Price</th>
+                        <th>Actual Price</th>
+                        <th>Bought At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pc : ${pcs}">
+                        <td th:text="${pc.id}"></td>
+                        <td th:text="${pc.name}"></td>
+                        <td th:text="${pc.macAddress}"></td>
+                        <td th:text="${pc.basePrice}"></td>
+                        <td class="fw-bold" th:text="${pc.price}"></td>
+                        <td th:text="${#temporals.format(pc.boughtAt, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td>
+                            <a th:href="@{/pcs/edit/{id}(id=${pc.id})}" class="btn btn-sm btn-warning">Edit</a>
+                            <a th:href="@{/pcs/delete/{id}(id=${pc.id})}" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${pcs.empty}">
+                        <td colspan="7" class="text-center text-muted py-3">No PCs found. Add some!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>

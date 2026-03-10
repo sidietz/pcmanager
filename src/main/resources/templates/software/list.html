@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head(title='Software - PC Manager')}"></head>
+
+<body class="bg-light">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Software</h2>
+            <a th:href="@{/software/add}" class="btn btn-primary">Add New Software</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Version</th>
+                        <th>Origin</th>
+                        <th>Installation Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="sw : ${softwareList}">
+                        <td th:text="${sw.id}"></td>
+                        <td th:text="${sw.name}"></td>
+                        <td th:text="${sw.version}"></td>
+                        <td th:text="${sw.origin}"></td>
+                        <td th:text="${sw.installationType}"></td>
+                        <td>
+                            <a th:href="@{/software/edit/{id}(id=${sw.id})}" class="btn btn-sm btn-warning">Edit</a>
+                            <a th:href="@{/software/delete/{id}(id=${sw.id})}" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${softwareList.empty}">
+                        <td colspan="6" class="text-center text-muted py-3">No Software found. Add some!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>

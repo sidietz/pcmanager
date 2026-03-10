@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head(title='Software Stacks - PC Manager')}"></head>
+
+<body class="bg-light">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Software Stacks</h2>
+            <a th:href="@{/software-stacks/add}" class="btn btn-primary">Add New Stack</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Software Count</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="stack : ${stacks}">
+                        <td th:text="${stack.id}"></td>
+                        <td th:text="${stack.name}"></td>
+                        <td th:text="${stack.softwareList != null ? stack.softwareList.size() : 0}"></td>
+                        <td>
+                            <a th:href="@{/software-stacks/edit/{id}(id=${stack.id})}"
+                                class="btn btn-sm btn-warning">Edit</a>
+                            <a th:href="@{/software-stacks/delete/{id}(id=${stack.id})}" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${stacks.empty}">
+                        <td colspan="4" class="text-center text-muted py-3">No Software Stacks found. Add some!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>

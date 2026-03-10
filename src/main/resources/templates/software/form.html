@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head(title='Software Form - PC Manager')}"></head>
+
+<body class="bg-light">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0" th:text="${software.id == null ? 'Add Software' : 'Edit Software'}"></h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/software/save}" th:object="${software}" method="post">
+                            <input type="hidden" th:field="*{id}">
+
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="version" class="form-label">Version</label>
+                                <input type="text" class="form-control" id="version" th:field="*{version}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="url" class="form-label">URL</label>
+                                <input type="url" class="form-control" id="url" th:field="*{url}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="origin" class="form-label">Origin</label>
+                                <select class="form-select" id="origin" th:field="*{origin}" required>
+                                    <option value="" disabled selected>Select Origin</option>
+                                    <option th:each="originValue : ${origins}" th:value="${originValue}"
+                                        th:text="${originValue}"></option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="installationType" class="form-label">Installation Type</label>
+                                <select class="form-select" id="installationType" th:field="*{installationType}"
+                                    required>
+                                    <option value="" disabled selected>Select Installation Type</option>
+                                    <option th:each="typeValue : ${installationTypes}" th:value="${typeValue}"
+                                        th:text="${typeValue}"></option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="installedAt" class="form-label">Installed At</label>
+                                <input type="datetime-local" class="form-control" id="installedAt"
+                                    th:field="*{installedAt}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="lastUpdated" class="form-label">Last Updated</label>
+                                <input type="datetime-local" class="form-control" id="lastUpdated"
+                                    th:field="*{lastUpdated}">
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <a th:href="@{/software}" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>

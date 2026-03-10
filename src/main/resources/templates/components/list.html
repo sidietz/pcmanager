@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head(title='Components - PC Manager')}"></head>
+
+<body class="bg-light">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Components</h2>
+            <a th:href="@{/components/add}" class="btn btn-primary">Add New Component</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Model</th>
+                        <th>Manufacturer</th>
+                        <th>Vendor</th>
+                        <th>Price</th>
+                        <th>PC Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="comp : ${components}">
+                        <td th:text="${comp.id}"></td>
+                        <td th:text="${comp.componentType}"></td>
+                        <td th:text="${comp.model}"></td>
+                        <td th:text="${comp.manufacturer}"></td>
+                        <td th:text="${comp.vendor}"></td>
+                        <td class="fw-bold" th:text="${comp.price}"></td>
+                        <td th:text="${comp.pc != null ? comp.pc.name : 'Unassigned'}"></td>
+                        <td>
+                            <a th:href="@{/components/edit/{id}(id=${comp.id})}" class="btn btn-sm btn-warning">Edit</a>
+                            <a th:href="@{/components/delete/{id}(id=${comp.id})}" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${components.empty}">
+                        <td colspan="8" class="text-center text-muted py-3">No Components found. Add some!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>

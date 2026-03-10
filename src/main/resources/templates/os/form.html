@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head(title='OS Form - PC Manager')}"></head>
+
+<body class="bg-light">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0" th:text="${os.id == null ? 'Add Operating System' : 'Edit Operating System'}">
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/os/save}" th:object="${os}" method="post">
+                            <input type="hidden" th:field="*{id}">
+
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="osFamily" class="form-label">OS Family</label>
+                                <select class="form-select" id="osFamily" th:field="*{osFamily}" required>
+                                    <option value="" disabled selected>Select OS Family</option>
+                                    <option th:each="fam : ${families}" th:value="${fam}" th:text="${fam}"></option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <a th:href="@{/os}" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>
