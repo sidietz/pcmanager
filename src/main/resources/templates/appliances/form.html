@@ -27,7 +27,7 @@
                                 <select class="form-select" id="operatingSystem" th:field="*{operatingSystem}">
                                     <option value="">- No OS -</option>
                                     <option th:each="osItem : ${osList}" th:value="${osItem.id}"
-                                        th:text="${osItem.name}"></option>
+                                        th:text="${osItem.name + (osItem.version != null ? ' (' + osItem.version + ')' : '')}"></option>
                                 </select>
                             </div>
 

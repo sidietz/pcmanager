@@ -8,6 +8,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.Formula;
+
 @Entity
 public class Software {
 
@@ -18,7 +20,7 @@ public class Software {
     private String name;
     @jakarta.persistence.Column(name = "version")
     private String installedVersion;
-    
+
     @jakarta.persistence.Column(name = "available_version")
     private String availableVersion;
     private String url;
@@ -31,6 +33,9 @@ public class Software {
 
     private LocalDateTime installedAt;
     private LocalDateTime lastUpdated;
+
+    @Formula(value = "version = available_version")
+    private boolean isUpToDate;
 
     public Long getId() {
         return id;
