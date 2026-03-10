@@ -19,8 +19,13 @@
 
                             <div class="mb-3">
                                 <label for="componentType" class="form-label">Type</label>
-                                <input type="text" class="form-control" id="componentType" th:field="*{componentType}"
-                                    required>
+                                <select class="form-select" id="componentType" th:field="*{componentType}" required>
+                                    <option value="" th:selected="${component.componentType == null}">- Select Type -</option>
+                                    <option th:each="type : ${componentTypes}" 
+                                            th:value="${type.id}" 
+                                            th:text="${type.name}">
+                                    </option>
+                                </select>
                             </div>
 
                             <div class="mb-3">

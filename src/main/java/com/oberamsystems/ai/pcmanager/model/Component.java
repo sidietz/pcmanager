@@ -16,7 +16,9 @@ public class Component {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String componentType;
+    @ManyToOne
+    @JoinColumn(name = "component_type_id")
+    private ComponentType componentType;
     private String model;
     private String manufacturer;
     private String vendor;
@@ -35,11 +37,11 @@ public class Component {
         this.id = id;
     }
 
-    public String getComponentType() {
+    public ComponentType getComponentType() {
         return componentType;
     }
 
-    public void setComponentType(String componentType) {
+    public void setComponentType(ComponentType componentType) {
         this.componentType = componentType;
     }
 

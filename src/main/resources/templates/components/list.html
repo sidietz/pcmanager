@@ -29,7 +29,7 @@
                 <tbody>
                     <tr th:each="comp : ${components}">
                         <td th:text="${comp.id}"></td>
-                        <td th:text="${comp.componentType}"></td>
+                        <td th:text="${comp.componentType != null ? comp.componentType.name : ''}"></td>
                         <td th:text="${comp.model}"></td>
                         <td th:text="${comp.manufacturer}"></td>
                         <td th:text="${comp.vendor}"></td>
@@ -37,6 +37,7 @@
                         <td th:text="${comp.pc != null ? comp.pc.name : 'Unassigned'}"></td>
                         <td>
                             <a th:href="@{/components/edit/{id}(id=${comp.id})}" class="btn btn-sm btn-warning">Edit</a>
+                            <a th:href="@{/components/duplicate/{id}(id=${comp.id})}" class="btn btn-sm btn-info">Duplicate</a>
                             <a th:href="@{/components/delete/{id}(id=${comp.id})}" class="btn btn-sm btn-danger"
                                 onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
