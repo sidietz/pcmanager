@@ -37,6 +37,14 @@ public class Software {
     @Formula(value = "version = available_version")
     private boolean isUpToDate;
 
+    public boolean isUpToDate() {
+        return isUpToDate;
+    }
+
+    public void setUpToDate(boolean isUpToDate) {
+        this.isUpToDate = isUpToDate;
+    }
+
     public Long getId() {
         return id;
     }

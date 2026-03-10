@@ -20,6 +20,7 @@
                         <th>Name</th>
                         <th>Installed Version</th>
                         <th>Available Version</th>
+                        <th>Up to Date</th>
                         <th>URL</th>
                         <th>Origin</th>
                         <th>Installation Type</th>
@@ -33,6 +34,10 @@
                         <td th:text="${sw.name}"></td>
                         <td th:text="${sw.installedVersion}"></td>
                         <td th:text="${sw.availableVersion}"></td>
+                        <td>
+                            <span th:if="${sw.upToDate}" class="badge bg-success">Yes</span>
+                            <span th:unless="${sw.upToDate}" class="badge bg-danger">No</span>
+                        </td>
                         <td>
                             <a th:if="${sw.url != null and !sw.url.empty}" th:href="${sw.url}" target="_blank"
                                 class="btn btn-sm btn-outline-info text-truncate" style="max-width: 150px;">Link</a>

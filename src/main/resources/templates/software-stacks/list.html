@@ -70,6 +70,7 @@
                                     <th>Name</th>
                                     <th>Installed Version</th>
                                     <th>Available Version</th>
+                                    <th>Up to Date</th>
                                     <th>Origin</th>
                                 </tr>
                             </thead>
@@ -79,6 +80,10 @@
                                     <td th:text="${softwareItem.name}"></td>
                                     <td th:text="${softwareItem.installedVersion}"></td>
                                     <td th:text="${softwareItem.availableVersion}"></td>
+                                    <td>
+                                        <span th:if="${softwareItem.upToDate}" class="badge bg-success">Yes</span>
+                                        <span th:unless="${softwareItem.upToDate}" class="badge bg-danger">No</span>
+                                    </td>
                                     <td th:text="${softwareItem.origin}"></td>
                                 </tr>
                                 <tr th:if="${stackSoftware.empty}">
