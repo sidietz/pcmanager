@@ -31,6 +31,24 @@
                                 </select>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="version" class="form-label">Version</label>
+                                <input type="text" class="form-control" id="version" th:field="*{version}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="releaseType" class="form-label">Release Type</label>
+                                <select class="form-select" id="releaseType" th:field="*{releaseType}" required>
+                                    <option value="" disabled selected>Select Release Type</option>
+                                    <option th:each="type : ${releaseTypes}" th:value="${type}" th:text="${type}"></option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="eolDate" class="form-label">EOL Date</label>
+                                <input type="date" class="form-control" id="eolDate" th:field="*{eolDate}">
+                            </div>
+
                             <div class="d-flex justify-content-between mt-4">
                                 <a th:href="@{/os}" class="btn btn-secondary">Cancel</a>
                                 <button type="submit" class="btn btn-success">Save</button>

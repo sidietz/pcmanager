@@ -2,6 +2,7 @@ package com.oberamsystems.ai.pcmanager.controller;
 
 import com.oberamsystems.ai.pcmanager.model.OperatingSystem;
 import com.oberamsystems.ai.pcmanager.model.OSFamily;
+import com.oberamsystems.ai.pcmanager.model.ReleaseType;
 import com.oberamsystems.ai.pcmanager.repository.OperatingSystemRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ public class OperatingSystemController {
     public String showAddForm(Model model) {
         model.addAttribute("os", new OperatingSystem());
         model.addAttribute("families", OSFamily.values());
+        model.addAttribute("releaseTypes", ReleaseType.values());
         return "os/form";
     }
 
@@ -36,6 +38,7 @@ public class OperatingSystemController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid OS Id:" + id));
         model.addAttribute("os", os);
         model.addAttribute("families", OSFamily.values());
+        model.addAttribute("releaseTypes", ReleaseType.values());
         return "os/form";
     }
 

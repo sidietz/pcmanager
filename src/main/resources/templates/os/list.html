@@ -18,7 +18,10 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Version</th>
                         <th>OS Family</th>
+                        <th>Release Type</th>
+                        <th>EOL Date</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -26,7 +29,10 @@
                     <tr th:each="os : ${oss}">
                         <td th:text="${os.id}"></td>
                         <td th:text="${os.name}"></td>
+                        <td th:text="${os.version}"></td>
                         <td th:text="${os.osFamily}"></td>
+                        <td th:text="${os.releaseType}"></td>
+                        <td th:text="${os.eolDate}"></td>
                         <td>
                             <a th:href="@{/os/edit/{id}(id=${os.id})}" class="btn btn-sm btn-warning">Edit</a>
                             <a th:href="@{/os/delete/{id}(id=${os.id})}" class="btn btn-sm btn-danger"

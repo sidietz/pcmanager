@@ -18,6 +18,12 @@ public class OperatingSystem {
     private OSFamily osFamily;
 
     private String name;
+    
+    private String version;
+    private java.time.LocalDate eolDate;
+
+    @Enumerated(EnumType.STRING)
+    private ReleaseType releaseType;
 
     public Long getId() {
         return id;
@@ -41,5 +47,29 @@ public class OperatingSystem {
 
     public void setOsFamily(OSFamily osFamily) {
         this.osFamily = osFamily;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public java.time.LocalDate getEolDate() {
+        return eolDate;
+    }
+
+    public void setEolDate(java.time.LocalDate eolDate) {
+        this.eolDate = eolDate;
+    }
+
+    public ReleaseType getReleaseType() {
+        return releaseType;
+    }
+
+    public void setReleaseType(ReleaseType releaseType) {
+        this.releaseType = releaseType;
     }
 }
