@@ -20,8 +20,16 @@ public class SoftwareStackController {
     }
 
     @GetMapping
-    public String list(Model model) {
+    public String list(@RequestParam(required = false) Long stackId, Model model) {
         model.addAttribute("stacks", stackRepository.findAll());
+        
+        if (stackId != null) {
+            stackRepository.findById(stackId).ifPresent(stack -> {
+                model.addAttribute("selectedStack", stack);
+                model.addAttribute("stackSoftware", stack.getSoftwareList());
+            });
+        }
+        
         return "software-stacks/list";
     }
 

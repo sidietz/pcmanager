@@ -40,6 +40,56 @@
                 </tbody>
             </table>
         </div>
+
+        <hr class="my-5">
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="mb-0">View Software by Stack</h4>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/software-stacks}" method="get" class="row g-3 align-items-end mb-4">
+                    <div class="col-md-8">
+                        <label for="stackId" class="form-label">Select Software Stack</label>
+                        <select class="form-select" id="stackId" name="stackId" onchange="this.form.submit()">
+                            <option value="">- Choose a stack -</option>
+                            <option th:each="stack : ${stacks}" th:value="${stack.id}" th:text="${stack.name}"
+                                th:selected="${selectedStack != null and selectedStack.id == stack.id}"></option>
+                        </select>
+                    </div>
+                </form>
+
+                <div th:if="${selectedStack != null}">
+                    <h5 class="mb-3">Software in <span class="text-primary" th:text="${selectedStack.name}"></span></h5>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Installed Version</th>
+                                    <th>Available Version</th>
+                                    <th>Origin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="softwareItem : ${stackSoftware}">
+                                    <td th:text="${softwareItem.id}"></td>
+                                    <td th:text="${softwareItem.name}"></td>
+                                    <td th:text="${softwareItem.installedVersion}"></td>
+                                    <td th:text="${softwareItem.availableVersion}"></td>
+                                    <td th:text="${softwareItem.origin}"></td>
+                                </tr>
+                                <tr th:if="${stackSoftware.empty}">
+                                    <td colspan="4" class="text-center text-muted">No software assigned to this stack.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div th:replace="~{fragments/layout :: scripts}"></div>

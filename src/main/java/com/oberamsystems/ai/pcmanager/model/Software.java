@@ -16,7 +16,11 @@ public class Software {
     private Long id;
 
     private String name;
-    private String version;
+    @jakarta.persistence.Column(name = "version")
+    private String installedVersion;
+    
+    @jakarta.persistence.Column(name = "available_version")
+    private String availableVersion;
     private String url;
 
     @Enumerated(EnumType.STRING)
@@ -44,12 +48,20 @@ public class Software {
         this.name = name;
     }
 
-    public String getVersion() {
-        return version;
+    public String getInstalledVersion() {
+        return installedVersion;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
+    public void setInstalledVersion(String installedVersion) {
+        this.installedVersion = installedVersion;
+    }
+
+    public String getAvailableVersion() {
+        return availableVersion;
+    }
+
+    public void setAvailableVersion(String availableVersion) {
+        this.availableVersion = availableVersion;
     }
 
     public String getUrl() {

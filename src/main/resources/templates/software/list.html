@@ -18,9 +18,12 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Version</th>
+                        <th>Installed Version</th>
+                        <th>Available Version</th>
+                        <th>URL</th>
                         <th>Origin</th>
                         <th>Installation Type</th>
+                        <th>Installed At</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -28,9 +31,15 @@
                     <tr th:each="sw : ${softwareList}">
                         <td th:text="${sw.id}"></td>
                         <td th:text="${sw.name}"></td>
-                        <td th:text="${sw.version}"></td>
+                        <td th:text="${sw.installedVersion}"></td>
+                        <td th:text="${sw.availableVersion}"></td>
+                        <td>
+                            <a th:if="${sw.url != null and !sw.url.empty}" th:href="${sw.url}" target="_blank"
+                                class="btn btn-sm btn-outline-info text-truncate" style="max-width: 150px;">Link</a>
+                        </td>
                         <td th:text="${sw.origin}"></td>
                         <td th:text="${sw.installationType}"></td>
+                        <td th:text="${sw.installedAt}"></td>
                         <td>
                             <a th:href="@{/software/edit/{id}(id=${sw.id})}" class="btn btn-sm btn-warning">Edit</a>
                             <a th:href="@{/software/delete/{id}(id=${sw.id})}" class="btn btn-sm btn-danger"

@@ -28,7 +28,8 @@
                                 <select class="form-select" id="softwareList" th:field="*{softwareList}" multiple
                                     style="height: 150px;">
                                     <option th:each="sw : ${allSoftware}" th:value="${sw.id}"
-                                        th:text="${sw.name + ' (' + sw.version + ')'}"></option>
+                                        th:selected="${stack.softwareList != null and stack.softwareList.contains(sw)}"
+                                        th:text="${sw.name + ' (' + sw.installedVersion + ')'}"></option>
                                 </select>
                                 <div class="form-text">Hold Ctrl/Cmd to select multiple.</div>
                             </div>
