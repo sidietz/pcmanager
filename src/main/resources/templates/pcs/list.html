@@ -45,6 +45,10 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="d-flex justify-content-end mt-3">
+            <h4 class="mb-0">Total PCs Price: <span class="text-success" th:text="${totalPrice}"></span></h4>
+        </div>
     </div>
 
     <div th:replace="~{fragments/layout :: scripts}"></div>

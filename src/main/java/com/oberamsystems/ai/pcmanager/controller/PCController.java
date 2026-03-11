@@ -21,7 +21,12 @@ public class PCController {
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("pcs", pcRepository.findAll());
+        java.util.List<PC> pcs = pcRepository.findAll();
+        java.math.BigDecimal totalPrice = pcs.stream()
+                .map(pc -> pc.getPrice() != null ? pc.getPrice() : java.math.BigDecimal.ZERO)
+                .reduce(java.math.BigDecimal.ZERO, java.math.BigDecimal::add);
+        model.addAttribute("pcs", pcs);
+        model.addAttribute("totalPrice", totalPrice);
         return "pcs/list";
     }
 

@@ -24,7 +24,12 @@ public class ComponentController {
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("components", componentRepository.findAll());
+        java.util.List<Component> components = componentRepository.findAll();
+        java.math.BigDecimal totalPrice = components.stream()
+                .map(c -> c.getPrice() != null ? c.getPrice() : java.math.BigDecimal.ZERO)
+                .reduce(java.math.BigDecimal.ZERO, java.math.BigDecimal::add);
+        model.addAttribute("components", components);
+        model.addAttribute("totalPrice", totalPrice);
         return "components/list";
     }
 
