@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import org.hibernate.annotations.Formula;
 
@@ -31,7 +32,9 @@ public class Software {
     @Enumerated(EnumType.STRING)
     private InstallationType installationType;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime installedAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime lastUpdated;
 
     @Formula(value = "version = available_version")

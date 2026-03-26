@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class PC {
@@ -22,6 +23,7 @@ public class PC {
     private String name;
     private String macAddress;
     private BigDecimal basePrice;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime boughtAt;
 
     @OneToMany(mappedBy = "pc")

@@ -8,6 +8,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Component {
@@ -23,6 +24,7 @@ public class Component {
     private String manufacturer;
     private String vendor;
     private BigDecimal price;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime boughtAt;
 
     @ManyToOne
