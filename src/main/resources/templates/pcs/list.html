@@ -49,6 +49,62 @@
         <div class="d-flex justify-content-end mt-3">
             <h4 class="mb-0">Total PCs Price: <span class="text-success" th:text="${totalPrice}"></span></h4>
         </div>
+
+        <hr class="my-5">
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="mb-0">View Components by PC</h4>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/pcs}" method="get" class="row g-3 align-items-end mb-4">
+                    <div class="col-md-8">
+                        <label for="pcId" class="form-label">Select PC</label>
+                        <select class="form-select" id="pcId" name="pcId" onchange="this.form.submit()">
+                            <option value="">- Choose a PC -</option>
+                            <option th:each="pc : ${pcs}" th:value="${pc.id}" th:text="${pc.name}"
+                                th:selected="${selectedPC != null and selectedPC.id == pc.id}"></option>
+                        </select>
+                    </div>
+                </form>
+
+                <div th:if="${selectedPC != null}">
+                    <h5 class="mb-3">Components in <span class="text-primary" th:text="${selectedPC.name}"></span></h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Type</th>
+                                    <th>Model</th>
+                                    <th>Manufacturer</th>
+                                    <th>Vendor</th>
+                                    <th>Price</th>
+                                    <th>Bought At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="component : ${pcComponents}">
+                                    <td th:text="${component.id}"></td>
+                                    <td
+                                        th:text="${component.componentType != null ? component.componentType.name : ''}">
+                                    </td>
+                                    <td th:text="${component.model}"></td>
+                                    <td th:text="${component.manufacturer}"></td>
+                                    <td th:text="${component.vendor}"></td>
+                                    <td th:text="${component.price}"></td>
+                                    <td th:text="${#temporals.format(component.boughtAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                </tr>
+                                <tr th:if="${pcComponents.empty}">
+                                    <td colspan="7" class="text-center text-muted">No components assigned to this PC.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div th:replace="~{fragments/layout :: scripts}"></div>
