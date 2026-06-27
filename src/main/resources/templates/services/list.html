@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head(title='Services - PC Manager')}"></head>
+
+<body class="bg-light">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Services</h2>
+            <a th:href="@{/services/add}" class="btn btn-primary">Add New Service</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Stack</th>
+                        <th>Status</th>
+                        <th>Port</th>
+                        <th>Software Dependencies</th>
+                        <th>Subdatabase Dependencies</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="srv : ${services}">
+                        <td th:text="${srv.id}"></td>
+                        <td th:text="${srv.name}"></td>
+                        <td th:text="${srv.softwareStack != null ? srv.softwareStack.name : 'None'}"></td>
+                        <td th:text="${srv.status}"></td>
+                        <td th:text="${srv.port}"></td>
+                        <td>
+                            <span th:each="sw, iterStat : ${srv.softwareList}"
+                                th:text="${sw.name + (!iterStat.last ? ', ' : '')}"></span>
+                        </td>
+                        <td>
+                            <span th:each="subdb, iterStat : ${srv.subdatabaseList}"
+                                th:text="${subdb.name + (!iterStat.last ? ', ' : '')}"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{/services/edit/{id}(id=${srv.id})}" class="btn btn-sm btn-warning">Edit</a>
+                            <a th:href="@{/services/delete/{id}(id=${srv.id})}" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${services.empty}">
+                        <td colspan="8" class="text-center text-muted py-3">No Services found. Add some!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head(title='Database Instances - PC Manager')}"></head>
+
+<body class="bg-light">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Database Instances</h2>
+            <a th:href="@{/database-instances/add}" class="btn btn-primary">Add New DB Instance</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Product</th>
+                        <th>Stack</th>
+                        <th>Version</th>
+                        <th>Port</th>
+                        <th>Installed At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="inst : ${instances}">
+                        <td th:text="${inst.id}"></td>
+                        <td th:text="${inst.name}"></td>
+                        <td th:text="${inst.databaseProduct != null ? (inst.databaseProduct.vendorName + ' ' + inst.databaseProduct.name) : 'None'}"></td>
+                        <td th:text="${inst.softwareStack != null ? inst.softwareStack.name : 'None'}"></td>
+                        <td th:text="${inst.installedVersion}"></td>
+                        <td th:text="${inst.port}"></td>
+                        <td th:text="${inst.installedAt != null ? #temporals.format(inst.installedAt, 'yyyy-MM-dd HH:mm') : 'N/A'}"></td>
+                        <td>
+                            <a th:href="@{/database-instances/edit/{id}(id=${inst.id})}" class="btn btn-sm btn-warning">Edit</a>
+                            <a th:href="@{/database-instances/delete/{id}(id=${inst.id})}" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${instances.empty}">
+                        <td colspan="8" class="text-center text-muted py-3">No Database Instances found. Add some!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>
