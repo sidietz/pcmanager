@@ -77,3 +77,59 @@ CREATE TABLE pc_appliance (
     CONSTRAINT fk_pc_appliance_pc FOREIGN KEY (pc_id) REFERENCES pc(id),
     CONSTRAINT fk_pc_appliance_app FOREIGN KEY (appliance_id) REFERENCES appliance(id)
 );
+
+CREATE TABLE database_product (
+    id BIGSERIAL PRIMARY KEY,
+    vendor_name TEXT,
+    name TEXT,
+    latest_version TEXT,
+    released_at DATE
+);
+
+CREATE TABLE database_instance (
+    id BIGSERIAL PRIMARY KEY,
+    name TEXT,
+    database_product_id BIGINT,
+    stack_id BIGINT,
+    installed_version TEXT,
+    port INTEGER,
+    installed_at TIMESTAMP,
+    last_updated TIMESTAMP,
+    CONSTRAINT fk_database_instance_product FOREIGN KEY (database_product_id) REFERENCES database_product(id),
+    CONSTRAINT fk_database_instance_stack FOREIGN KEY (stack_id) REFERENCES software_stack(id)
+);
+
+CREATE TABLE subdatabase (
+    id BIGSERIAL PRIMARY KEY,
+    name TEXT,
+    database_instance_id BIGINT,
+    created_at TIMESTAMP,
+    CONSTRAINT fk_subdatabase_instance FOREIGN KEY (database_instance_id) REFERENCES database_instance(id)
+);
+
+CREATE TABLE service (
+    id BIGSERIAL PRIMARY KEY,
+    name TEXT,
+    stack_id BIGINT,
+    status TEXT,
+    port INTEGER,
+    installed_at TIMESTAMP,
+    last_updated TIMESTAMP,
+    CONSTRAINT fk_service_stack FOREIGN KEY (stack_id) REFERENCES software_stack(id)
+);
+
+CREATE TABLE service_software (
+    service_id BIGINT NOT NULL,
+    software_id BIGINT NOT NULL,
+    PRIMARY KEY (service_id, software_id),
+    CONSTRAINT fk_service_software_service FOREIGN KEY (service_id) REFERENCES service(id),
+    CONSTRAINT fk_service_software_software FOREIGN KEY (software_id) REFERENCES software(id)
+);
+
+CREATE TABLE service_subdatabase (
+    service_id BIGINT NOT NULL,
+    subdatabase_id BIGINT NOT NULL,
+    PRIMARY KEY (service_id, subdatabase_id),
+    CONSTRAINT fk_service_subdatabase_service FOREIGN KEY (service_id) REFERENCES service(id),
+    CONSTRAINT fk_service_subdatabase_subdb FOREIGN KEY (subdatabase_id) REFERENCES subdatabase(id)
+);

@@ -49,6 +49,7 @@
             </div>
             <div class="card-body">
                 <form th:action="@{/software-stacks}" method="get" class="row g-3 align-items-end mb-4">
+                    <input type="hidden" name="serviceStackId" th:if="${selectedServiceStack != null}" th:value="${selectedServiceStack.id}">
                     <div class="col-md-8">
                         <label for="stackId" class="form-label">Select Software Stack</label>
                         <select class="form-select" id="stackId" name="stackId" onchange="this.form.submit()">
@@ -87,7 +88,64 @@
                                     <td th:text="${softwareItem.origin}"></td>
                                 </tr>
                                 <tr th:if="${stackSoftware.empty}">
-                                    <td colspan="4" class="text-center text-muted">No software assigned to this stack.</td>
+                                    <td colspan="6" class="text-center text-muted">No software assigned to this stack.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="mb-0">View Service by Stack</h4>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/software-stacks}" method="get" class="row g-3 align-items-end mb-4">
+                    <input type="hidden" name="stackId" th:if="${selectedStack != null}" th:value="${selectedStack.id}">
+                    <div class="col-md-8">
+                        <label for="serviceStackId" class="form-label">Select Software Stack</label>
+                        <select class="form-select" id="serviceStackId" name="serviceStackId" onchange="this.form.submit()">
+                            <option value="">- Choose a stack -</option>
+                            <option th:each="stack : ${stacks}" th:value="${stack.id}" th:text="${stack.name}"
+                                th:selected="${selectedServiceStack != null and selectedServiceStack.id == stack.id}"></option>
+                        </select>
+                    </div>
+                </form>
+
+                <div th:if="${selectedServiceStack != null}">
+                    <h5 class="mb-3">Services in <span class="text-primary" th:text="${selectedServiceStack.name}"></span></h5>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th>Port</th>
+                                    <th>Software Dependencies</th>
+                                    <th>Subdatabase Dependencies</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="srv : ${stackServices}">
+                                    <td th:text="${srv.id}"></td>
+                                    <td th:text="${srv.name}"></td>
+                                    <td th:text="${srv.status}"></td>
+                                    <td th:text="${srv.port}"></td>
+                                    <td>
+                                        <span th:each="sw, iterStat : ${srv.softwareList}"
+                                            th:text="${sw.name + (!iterStat.last ? ', ' : '')}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:each="subdb, iterStat : ${srv.subdatabaseList}"
+                                            th:text="${subdb.name + (!iterStat.last ? ', ' : '')}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${stackServices.empty}">
+                                    <td colspan="6" class="text-center text-muted">No services assigned to this stack.</td>
                                 </tr>
                             </tbody>
                         </table>

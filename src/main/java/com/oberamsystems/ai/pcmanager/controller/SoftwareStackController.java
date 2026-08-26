@@ -3,6 +3,7 @@ package com.oberamsystems.ai.pcmanager.controller;
 import com.oberamsystems.ai.pcmanager.model.SoftwareStack;
 import com.oberamsystems.ai.pcmanager.repository.SoftwareStackRepository;
 import com.oberamsystems.ai.pcmanager.repository.SoftwareRepository;
+import com.oberamsystems.ai.pcmanager.repository.ServiceRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,20 +14,31 @@ public class SoftwareStackController {
 
     private final SoftwareStackRepository stackRepository;
     private final SoftwareRepository softwareRepository;
+    private final ServiceRepository serviceRepository;
 
-    public SoftwareStackController(SoftwareStackRepository stackRepository, SoftwareRepository softwareRepository) {
+    public SoftwareStackController(SoftwareStackRepository stackRepository, SoftwareRepository softwareRepository, ServiceRepository serviceRepository) {
         this.stackRepository = stackRepository;
         this.softwareRepository = softwareRepository;
+        this.serviceRepository = serviceRepository;
     }
 
     @GetMapping
-    public String list(@RequestParam(required = false) Long stackId, Model model) {
+    public String list(@RequestParam(required = false) Long stackId,
+                       @RequestParam(required = false) Long serviceStackId,
+                       Model model) {
         model.addAttribute("stacks", stackRepository.findAll());
         
         if (stackId != null) {
             stackRepository.findById(stackId).ifPresent(stack -> {
                 model.addAttribute("selectedStack", stack);
                 model.addAttribute("stackSoftware", stack.getSoftwareList());
+            });
+        }
+        
+        if (serviceStackId != null) {
+            stackRepository.findById(serviceStackId).ifPresent(stack -> {
+                model.addAttribute("selectedServiceStack", stack);
+                model.addAttribute("stackServices", serviceRepository.findBySoftwareStackId(serviceStackId));
             });
         }
         
