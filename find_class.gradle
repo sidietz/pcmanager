@@ -1,0 +1,14 @@
+tasks.register('findClasses') {
+    doLast {
+        configurations.testCompileClasspath.each { file ->
+            if (file.name.endsWith('.jar')) {
+                def zip = new java.util.zip.ZipFile(file)
+                zip.entries().each { entry ->
+                    if (entry.name.contains('WebMvcTest') || entry.name.contains('MockBean') || entry.name.contains('MockitoBean')) {
+                        println "Found ${entry.name} in ${file.name}"
+                    }
+                }
+            }
+        }
+    }
+}
