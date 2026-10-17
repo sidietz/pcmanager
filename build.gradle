@@ -25,7 +25,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-	implementation 'org.apache.tomcat.embed:tomcat-embed-core:11.0.26'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-core:11.0.26' // fixes a CVE
+	implementation 'tools.jackson.core:jackson-databind:3.2.3' // fixes a CVE
+	implementation 'org.apache.commons:commons-lang3:3.21.0' // fixes a CVE
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
